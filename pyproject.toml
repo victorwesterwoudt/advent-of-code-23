@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "Advent of Code 2023"
+version = "0.0.1"
+description = "Advent of Code 2023 solutions"
+authors = ["Foo Bar"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+numpy = "==1.24.1"
+jupyter = "^1.0.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.11.0"
+isort = "^5.12.0"
+flake8 = "^6.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 79
+target-version = ['py36', 'py37', 'py38', 'py39']
+include = '\.pyi?$'
+exclude = '''(
+    /(
+        \.git
+        | \.hg
+        | \.mypy_cache
+        | \.tox
+        | \.venv
+        | _build
+        | buck-out
+        | build
+        | dist
+    )/
+    | foo.py
+)'''
