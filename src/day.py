@@ -7,5 +7,5 @@ class Day:
         pass
 
     @property
-    def data(self) -> list:
+    def raw_data(self) -> list:
         return self._input.data

@@ -27,10 +27,10 @@ class Day_1(Day):
         return [int(x[0]) * 10 + int(x[-1]) for x in cls._filter_data(data)]
 
     def part_1(self) -> int:
-        return sum(self._numerize(self.data))
+        return sum(self._numerize(self.raw_data))
 
     def part_2(self) -> int:
-        temp = self.data
+        temp = self.raw_data
         for digit in Digits:
             temp = [
                 re.sub(
