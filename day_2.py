@@ -1,6 +1,7 @@
-from src import Day
-from functools import reduce
 from enum import Enum
+from functools import reduce
+
+from src import Day
 
 
 class RGB(Enum):
@@ -61,7 +62,8 @@ class Day2(Day):
             maximum (int): The maximum limit for a draw.
 
         Returns:
-            bool: True if all draws are within the maximum limit, False otherwise.
+            bool: True if all draws are within the maximum limit, False
+            otherwise.
         """
         return not any(draw > maximum for draw in draws)
 

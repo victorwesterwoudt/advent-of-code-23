@@ -10,4 +10,4 @@ class Day:
 
     @property
     def data(self) -> list:
-        raise NotImplementedError
+        return self.raw_data

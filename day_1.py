@@ -21,16 +21,6 @@ class Day1(Day):
     Class representing the solution for Day 1 of the Advent of Code challenge.
     """
 
-    @property
-    def data(self) -> list:
-        """
-        Get the raw data for the challenge.
-
-        Returns:
-            list: The raw data.
-        """
-        return self.raw_data
-
     @staticmethod
     def _filter_data(data: list) -> list:
         """
@@ -70,11 +60,12 @@ class Day1(Day):
         """
         Solve part 2 of the challenge.
 
-        The trick here is that the strings of digits that are being replaced by numbers
-        can have their characters overlap with the string of another digit. For example,
-        "eightwo" should be replaced with "82". This is why replacing the whole world 
-        with a number doesn't work. Instead, we need to replace the middle characters of the 
-        number and leave the first and last characters intact.
+        The trick here is that the strings of digits that are being replaced by
+        numbers can have their characters overlap with the string of another
+        digit. For example, "eightwo" should be replaced with "82". This is why
+        replacing the whole world with a number doesn't work. Instead, we need
+        to replace the middle characters of the number and leave the first and
+        last characters intact.
 
         Returns:
             int: The solution for part 2.
@@ -84,7 +75,10 @@ class Day1(Day):
             temp = [
                 re.sub(
                     digit.name.lower(),
-                    f"{digit.name[0]}{str(digit.value)}{digit.name[-1]}".lower(),
+                    (
+                        f"{digit.name[0]}{str(digit.value)}"
+                        f"{digit.name[-1]}"
+                    ).lower(),
                     line,
                 )
                 for line in temp
