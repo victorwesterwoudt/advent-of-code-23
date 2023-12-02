@@ -1,7 +1,7 @@
 import re
 from enum import Enum
 
-from src import Input, Day
+from src import Day
 
 
 class Digits(Enum):
@@ -16,7 +16,10 @@ class Digits(Enum):
     NINE = 9
 
 
-class Day_1(Day):
+class Day1(Day):
+    @property
+    def data(self) -> list:
+        return self.raw_data
 
     @staticmethod
     def _filter_data(data: list) -> list:
@@ -27,10 +30,10 @@ class Day_1(Day):
         return [int(x[0]) * 10 + int(x[-1]) for x in cls._filter_data(data)]
 
     def part_1(self) -> int:
-        return sum(self._numerize(self.raw_data))
+        return sum(self._numerize(self.data))
 
     def part_2(self) -> int:
-        temp = self.raw_data
+        temp = self.data
         for digit in Digits:
             temp = [
                 re.sub(
@@ -45,6 +48,6 @@ class Day_1(Day):
 
 
 if __name__ == "__main__":
-    d1 = Day_1('./input/day_1.txt')
+    d1 = Day1("./input/day_1.txt")
     print(f"Part 1: {d1.part_1()}")
     print(f"Part 2: {d1.part_2()}")
