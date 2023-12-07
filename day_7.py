@@ -1,24 +1,25 @@
 from src import Day
 from enum import Enum
 from functools import cached_property
+from typing import List, Tuple
 
 
-class Cards(Enum):
+class Card(Enum):
     rank: int
 
-    def __new__(cls, value, rank):
+    def __new__(cls, value: str, rank: int):
         obj = object.__new__(cls)
         obj._value_ = value
         obj.rank = rank
         return obj
 
-    def __lt__(self, other):
+    def __lt__(self, other: "Card"):
         return self.value < other.value
 
-    def __gt__(self, other):
+    def __gt__(self, other: "Card"):
         return self.value > other.value
 
-    def __eq__(self, other):
+    def __eq__(self, other: "Card"):
         return self.value == other.value
 
     def __str__(self) -> str:
@@ -43,7 +44,7 @@ class Cards(Enum):
     JOKER = ("*", -1)
 
 
-class HandRank(Enum):
+class Rank(Enum):
     def __lt__(self, other):
         return self.value < other.value
 
@@ -63,12 +64,12 @@ class HandRank(Enum):
 
 
 class Hand:
-    def __init__(self, cards: list[Cards]):
+    def __init__(self, cards: List[Card]):
         """
         Initialize a Hand object with a list of cards.
 
         Args:
-            cards (list[Cards]): A list of Cards objects
+            cards (List[Cards]): A list of Cards objects
                 representing the cards in the hand.
         """
         self.cards = cards
@@ -103,12 +104,12 @@ class Hand:
         else:
             return self.rank < other.rank
 
-    def _rank(self, cards: list[Cards]):
+    def _rank(self, cards: List[Card]) -> Rank:
         """
         Determine the rank of a hand based on its cards.
 
         Args:
-            cards (list[Cards]): A list of Cards objects representing
+            cards (List[Cards]): A list of Cards objects representing
                 the cards in the hand.
 
         Returns:
@@ -117,24 +118,24 @@ class Hand:
         cs = set(cards)
         match len(cs):
             case 1:
-                return HandRank.FIVE_OF_A_KIND
+                return Rank.FIVE_OF_A_KIND
             case 2:
                 if any([cards.count(card) == 4 for card in cs]):
-                    return HandRank.FOUR_OF_A_KIND
+                    return Rank.FOUR_OF_A_KIND
                 else:
-                    return HandRank.FULL_HOUSE
+                    return Rank.FULL_HOUSE
             case 3:
                 if any([cards.count(card) == 3 for card in cs]):
-                    return HandRank.THREE_OF_A_KIND
+                    return Rank.THREE_OF_A_KIND
                 else:
-                    return HandRank.TWO_PAIR
+                    return Rank.TWO_PAIR
             case 4:
-                return HandRank.ONE_PAIR
+                return Rank.ONE_PAIR
             case _:
-                return HandRank.HIGH_CARD
+                return Rank.HIGH_CARD
 
     @cached_property
-    def rank(self):
+    def rank(self) -> Rank:
         """
         Get the rank of the hand.
 
@@ -146,14 +147,14 @@ class Hand:
 
 class JokerHand(Hand):
     @cached_property
-    def rank(self):
-        jokers = [card for card in self.cards if card == Cards.JOKER]
-        nonjokers = [card for card in self.cards if card != Cards.JOKER]
+    def rank(self) -> Rank:
+        jokers = [card for card in self.cards if card == Card.JOKER]
+        nonjokers = [card for card in self.cards if card != Card.JOKER]
 
         if len(jokers) == 0:
             return self._rank(nonjokers)
         elif len(jokers) == len(self.cards):
-            return HandRank.FIVE_OF_A_KIND
+            return Rank.FIVE_OF_A_KIND
         else:
             ranks = []
             for card in set(nonjokers):
@@ -164,26 +165,26 @@ class JokerHand(Hand):
 
 class Day7(Day):
     @property
-    def data(self):
+    def data(self) -> List[Tuple[Hand, int]]:
         output = []
         for line in self.raw_data:
             hand, bid = line.split()
-            output.append((Hand([Cards(card) for card in hand]), int(bid)))
+            output.append((Hand([Card(card) for card in hand]), int(bid)))
 
         return output
 
-    def part_1(self):
+    def part_1(self) -> int:
         total_winnings = 0
         for i, (_, bid) in enumerate(sorted(self.data)):
             total_winnings += bid * (i + 1)
         return total_winnings
 
-    def part_2(self):
+    def part_2(self) -> int:
         new_data = []
         for hand, bid in sorted(self.data):
             new_hand = []
             for card in hand.cards:
-                new_hand.append(card if card != Cards.JACK else Cards.JOKER)
+                new_hand.append(card if card != Card.JACK else Card.JOKER)
             new_data.append((JokerHand(new_hand), bid))
 
         total_winnings = 0
