@@ -1,5 +1,6 @@
-from src import Day
 import math
+
+from src import Day
 
 
 class Day6(Day):

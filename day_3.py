@@ -21,14 +21,14 @@ if __name__ == "__main__":
             elif char.isdigit():
                 part[0] += char
 
-                for l in range(max(0, r - 1), min(h, r + 2)):
+                for ln in range(max(0, r - 1), min(h, r + 2)):
                     for x in range(max(0, c - 1), min(w, c + 2)):
                         if (
-                            not d3.data[l][x].isnumeric()
-                            and d3.data[l][x] != "."
+                            not d3.data[ln][x].isnumeric()
+                            and d3.data[ln][x] != "."
                         ):
                             ispart = True
-                            part[1] = (l, x, d3.data[l][x])
+                            part[1] = (ln, x, d3.data[ln][x])
 
     stars = [x[1] for x in parts if x[1][2] == "*"]
     stars = set([star for star in stars if stars.count(star) == 2])

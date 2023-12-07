@@ -1,5 +1,6 @@
-from collections import defaultdict, deque
+from collections import defaultdict
 from functools import cached_property
+
 from src import Day
 
 
