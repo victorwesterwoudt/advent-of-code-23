@@ -1,7 +1,8 @@
-from src import Day
 from enum import Enum
 from functools import cached_property
 from typing import List, Tuple
+
+from src import Day
 
 
 class Card(Enum):
