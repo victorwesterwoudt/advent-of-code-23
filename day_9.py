@@ -30,7 +30,7 @@ class Day9(Day):
             else:
                 return lst[-1]
         else:
-            delta = [j-i for i, j in zip(lst[:-1], lst[1:])]
+            delta = [j - i for i, j in zip(lst[:-1], lst[1:])]
             if backwards:
                 return lst[0] - cls.solve(delta, backwards)
             else:
