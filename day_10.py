@@ -1,5 +1,6 @@
 from src import Day
 from functools import cached_property
+from collections import deque
 from enum import Enum
 
 
@@ -81,7 +82,7 @@ class Day10(Day):
 
     @cached_property
     def loop(self):
-        loop = [self.start, self._next(self.start)[0]]
+        loop = deque([self.start, self._next(self.start)[0]])
         while True:
             next = list(filter(lambda x: x not in loop, self._next(loop[-1])))
             if len(next) != 0:
