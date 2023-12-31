@@ -97,7 +97,10 @@ class Module(object):
         raise NotImplementedError
 
     def __repr__(self) -> str:
-        return f"{self.name}, {self.__class__.__name__}, out: {tuple(self.outputs)}"
+        return (
+            f"{self.name}, {self.__class__.__name__}"
+            f", out: {tuple(self.outputs)}"
+        )
 
 
 class Test(Module):
@@ -146,7 +149,7 @@ class FlipFlop(Module):
         if pulse == Pulse.HIGH:
             return
 
-        if self.state == True:
+        if self.state:
             self.state = False
             return [(x, Pulse.LOW) for x in self.outputs]
         else:
